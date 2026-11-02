@@ -1,15 +1,15 @@
 import React from 'react';
-import { DollarSign, Sliders, RotateCcw, CheckCircle2, AlertCircle, Sparkles, TrendingUp } from 'lucide-react';
+import { IndianRupee, Sliders, RotateCcw, CheckCircle2, AlertCircle, Sparkles, TrendingUp } from 'lucide-react';
 
 /**
  * BudgetController Component:
- * Synchronized slider and whole-number input for complete-stay hotel lodging budget (0 to 1,000,000).
+ * Synchronized slider and whole-number input for complete-stay hotel lodging budget in INR Rupees (0 to 1,000,000).
  * SPR26_D2_P03 Specification compliant.
  */
 export function BudgetController({
   budget,
   minBudget = 0,
-  maxBudget = 3000,
+  maxBudget = 30000,
   affordableCount,
   totalHotelsCount,
   hotels = [],
@@ -17,10 +17,10 @@ export function BudgetController({
   onResetBudget
 }) {
   const PRESETS = [
-    { label: 'Backpacker ($820)', amount: 820 },
-    { label: 'Baseline Trip ($1,200)', amount: 1200 },
-    { label: 'Unlock Palace ($1,450)', amount: 1450 },
-    { label: 'Luxury Haven ($2,200)', amount: 2200 }
+    { label: 'Backpacker (₹8,200)', amount: 8200 },
+    { label: 'Baseline Trip (₹12,000)', amount: 12000 },
+    { label: 'Unlock Palace (₹14,500)', amount: 14500 },
+    { label: 'Luxury Haven (₹22,000)', amount: 22000 }
   ];
 
   const handleInputChange = (e) => {
@@ -36,7 +36,7 @@ export function BudgetController({
   };
 
   const isInvalid = typeof budget !== 'number' || isNaN(budget) || budget < 0 || budget > 1000000;
-  const isBoundaryActive = budget === 1450;
+  const isBoundaryActive = budget === 14500;
 
   return (
     <div className="panel p-6 h-full flex flex-col justify-between">
@@ -48,30 +48,30 @@ export function BudgetController({
             </div>
             <div>
               <h3 className="panel-title">Complete Stay Budget</h3>
-              <p className="panel-sub">Total lodging budget for the entire group trip (not nightly)</p>
+              <p className="panel-sub">Total lodging budget for the entire group trip in INR (₹)</p>
             </div>
           </div>
           <button
             onClick={onResetBudget}
             className="btn shrink-0"
-            title="Reset budget to documented initial $1,200"
+            title="Reset budget to documented initial ₹12,000"
           >
-            <RotateCcw className="w-3 h-3" /> Reset ($1,200)
+            <RotateCcw className="w-3 h-3" /> Reset (₹12,000)
           </button>
         </div>
 
         {/* Big Readout */}
         <div className="mt-5 flex items-end justify-between gap-4">
           <div>
-            <label htmlFor="budget-input" className="eyebrow block mb-2">Total Stay Allowance</label>
-            <div className="relative w-44">
-              <DollarSign className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gold-400 pointer-events-none" />
+            <label htmlFor="budget-input" className="eyebrow block mb-2">Total Stay Allowance (₹)</label>
+            <div className="relative w-48">
+              <IndianRupee className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gold-400 pointer-events-none" />
               <input
                 id="budget-input"
                 type="number"
                 min="0"
                 max="1000000"
-                step="10"
+                step="100"
                 value={budget}
                 onChange={handleInputChange}
                 className={`field w-full !pl-10 !pr-3 py-2.5 !text-2xl font-display font-extrabold text-white num ${
@@ -101,17 +101,17 @@ export function BudgetController({
             type="range"
             min={minBudget}
             max={maxBudget}
-            step="10"
+            step="100"
             value={Math.min(maxBudget, Math.max(0, budget))}
             onChange={(e) => onBudgetChange(Number(e.target.value))}
             className="w-full accent-brand-500 h-2 bg-ink-700 rounded-lg cursor-pointer transition"
           />
           <div className="flex justify-between text-[11px] text-ink-400 font-mono mt-1">
-            <span>$0</span>
-            <span>$1,050 (H02)</span>
-            <span>$1,200 (Initial)</span>
-            <span>$1,450 (H01)</span>
-            <span>$3,000+</span>
+            <span>₹0</span>
+            <span>₹10,500 (H02)</span>
+            <span>₹12,000 (Initial)</span>
+            <span>₹14,500 (H01)</span>
+            <span>₹30,000+</span>
           </div>
         </div>
 
@@ -144,18 +144,18 @@ export function BudgetController({
             Story What-If #1: Budget Boundary
           </span>
           <p className="text-ink-300 text-[11px] mt-0.5">
-            Raise budget to $1,450 to unlock Grand Palace Imperial (unique lowest travel total).
+            Raise budget to ₹14,500 to unlock Grand Palace Imperial (unique lowest travel total).
           </p>
         </div>
         <button
-          onClick={() => onBudgetChange(1450)}
+          onClick={() => onBudgetChange(14500)}
           className={`btn shrink-0 !py-1 !px-2.5 !text-xs font-semibold ${
             isBoundaryActive
               ? '!border-emerald-400/50 !bg-emerald-400/20 !text-emerald-300'
               : '!border-gold-400/40 !bg-gold-400/10 !text-gold-300 hover:!bg-gold-400/20'
           }`}
         >
-          {isBoundaryActive ? 'Active ($1,450)' : 'Apply $1,450 →'}
+          {isBoundaryActive ? 'Active (₹14,500)' : 'Apply ₹14,500 →'}
         </button>
       </div>
     </div>

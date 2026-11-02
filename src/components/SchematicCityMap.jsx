@@ -290,7 +290,7 @@ export function SchematicCityMap({
           {hotels.map((hotel) => {
             const isSelected = inspectedHotel?.id === hotel.id;
             const isAffordable = hotel.stay_cost <= budget;
-            const isRec = hotel.id === 'H01_PALACE' && budget >= 1450 ? true : hotel.id === 'H02_METRO' && budget >= 1050 && budget < 1450;
+            const isRec = hotel.id === 'H01_PALACE' && budget >= 14500 ? true : hotel.id === 'H02_METRO' && budget >= 10500 && budget < 14500;
             const x = hotel.coordinates.x;
             const y = hotel.coordinates.y;
 
@@ -353,9 +353,9 @@ export function SchematicCityMap({
                 {/* Cost Label Pill below pin */}
                 <g transform="translate(0, 27)">
                   <rect
-                    x="-35"
+                    x="-40"
                     y="-8"
-                    width="70"
+                    width="80"
                     height="16"
                     rx="8"
                     fill={isAffordable ? 'rgba(15, 23, 42, 0.95)' : 'rgba(76, 5, 25, 0.95)'}
@@ -371,7 +371,7 @@ export function SchematicCityMap({
                     fontFamily="monospace"
                     fontWeight="bold"
                   >
-                    ${hotel.stay_cost}
+                    ₹{hotel.stay_cost.toLocaleString('en-IN')}
                   </text>
                 </g>
               </g>

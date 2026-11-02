@@ -58,8 +58,8 @@ export function BudgetTimeline({
               )}
 
               <div className="font-mono text-xs font-bold text-ink-300">
-                ${segment.startBudget}
-                {segment.endBudget ? ` – $${segment.endBudget}` : '+'}
+                ₹{segment.startBudget.toLocaleString('en-IN')}
+                {segment.endBudget ? ` – ₹${segment.endBudget.toLocaleString('en-IN')}` : '+'}
               </div>
 
               <div className="mt-1 text-sm font-bold text-white group-hover:text-purple-300 transition truncate">

@@ -416,7 +416,7 @@ docs/
 When you add the corresponding images, insert them using the matching Markdown references below. Remove any reference for an image you do not add.
 
 ```md
-![Application architecture overview](docs/assets/architecture-overview.png)
+![Application architecture overview](https://res.cloudinary.com/dludtk5vz/image/upload/v1793644399/Hotel_Recommendation_App_Architecture_a7aqqr.png)
 
 ![Application flow](docs/assets/application-flow.png)
 
@@ -560,10 +560,10 @@ The following are proposed extensions, not implemented features:
 
 | Field | Details |
 |---|---|
-| Developer | `<Your Name>` |
-| GitHub | `<Your GitHub Profile URL>` |
-| LinkedIn | `<Your LinkedIn Profile URL>` |
-| Repository | `<Your Repository URL>` |
+| Developer | `Subhajyoti Dey` |
+| GitHub | `https://github.com/SubhaNITS150` |
+| LinkedIn | `https://www.linkedin.com/in/subhajyoti-dey-635922235` |
+| Repository | `https://github.com/SubhaNITS150/BaseCamp` |
 
 ---
 

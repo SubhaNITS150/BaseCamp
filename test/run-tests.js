@@ -1,5 +1,6 @@
 /**
  * Comprehensive Automated Test Suite for SPR26_D2_P03: Hotel Base-Camp Comparator
+ * Currency: INR Rupees (₹)
  *
  * Tests all required acceptance criteria:
  * 1. Scenario counts, IDs, place types, and matrix stability
@@ -9,7 +10,7 @@
  * 5. Tie-break by stay_cost
  * 6. Tie-break by ASCII hotel ID
  * 7. Budget equality (stay_cost == budget) and 1-unit shortfall (stay_cost == budget + 1)
- * 8. Main scenario story conditions (4-7 affordable, unique lowest over budget,
+ * 8. Main scenario story conditions in INR (4-7 affordable, unique lowest over budget,
  *    recommended != cheapest, 90-min boundaries, boundary cost unlock, importance flip)
  * 9. NO_AFFORDABLE_HOTEL result with no stale recommendation
  * 10. Scenario validation (duplicate ID, malformed ID, invalid counts, missing/unknown matrix entries)
@@ -43,7 +44,7 @@ function assert(condition, testName, details = '') {
 }
 
 console.log('=====================================================');
-console.log('RUNNING COMPARATOR ACCEPTANCE CRITERIA VERIFICATION');
+console.log('RUNNING COMPARATOR ACCEPTANCE CRITERIA VERIFICATION (INR ₹)');
 console.log('=====================================================\n');
 
 // 1. Data Contract & Scenario Dimensions
@@ -93,13 +94,13 @@ const miniMatrixNear = {
 };
 const resNear = evaluateAndRankComparator(
   [
-    { id: 'H_SECOND', name: 'Second Hotel', stay_cost: 500 },
-    { id: 'H_FIRST', name: 'First Hotel', stay_cost: 500 }
+    { id: 'H_SECOND', name: 'Second Hotel', stay_cost: 5000 },
+    { id: 'H_FIRST', name: 'First Hotel', stay_cost: 5000 }
   ],
   miniPlaces3,
   { P01: 4, P02: 4, P03: 2 },
   miniMatrixNear,
-  1000
+  10000
 );
 assert(resNear.isValid, '3-place scenario passes validation');
 assert(resNear.affordableHotels[0].id === 'H_FIRST', 'Exact weighted_travel_total strictly dictates order (H_FIRST before H_SECOND)');
@@ -108,8 +109,8 @@ assert(resNear.affordableHotels[0].id === 'H_FIRST', 'Exact weighted_travel_tota
 console.log('\nTest Group 4: Tie-Breaking (Stay Cost, then ASCII Hotel ID)');
 // Tie 1: Accessibility tie broken by stay_cost
 const miniTieAccessibility = [
-  { id: 'H_EXPENSIVE', name: 'Expensive Hotel', stay_cost: 700 },
-  { id: 'H_CHEAP', name: 'Cheap Hotel', stay_cost: 600 }
+  { id: 'H_EXPENSIVE', name: 'Expensive Hotel', stay_cost: 7000 },
+  { id: 'H_CHEAP', name: 'Cheap Hotel', stay_cost: 6000 }
 ];
 const matrixTie1 = {
   H_EXPENSIVE: { P01: 30, P02: 30, P03: 30 },
@@ -120,15 +121,15 @@ const resTie1 = evaluateAndRankComparator(
   miniPlaces3,
   { P01: 4, P02: 4, P03: 2 },
   matrixTie1,
-  1000
+  10000
 );
 assert(resTie1.affordableHotels[0].id === 'H_CHEAP', 'Accessibility tie is resolved by lower stay_cost');
 assert(resTie1.affordableHotels[1].id === 'H_EXPENSIVE', 'Higher stay cost ranks 2nd in accessibility tie');
 
 // Tie 2: Complete tie (accessibility and stay_cost equal) broken by hotel ID ASCII order
 const miniTieASCII = [
-  { id: 'H_ZETA', name: 'Zeta Hotel', stay_cost: 600 },
-  { id: 'H_ALPHA', name: 'Alpha Hotel', stay_cost: 600 }
+  { id: 'H_ZETA', name: 'Zeta Hotel', stay_cost: 6000 },
+  { id: 'H_ALPHA', name: 'Alpha Hotel', stay_cost: 6000 }
 ];
 const matrixTie2 = {
   H_ZETA: { P01: 30, P02: 30, P03: 30 },
@@ -139,15 +140,15 @@ const resTie2 = evaluateAndRankComparator(
   miniPlaces3,
   { P01: 4, P02: 4, P03: 2 },
   matrixTie2,
-  1000
+  10000
 );
 assert(resTie2.affordableHotels[0].id === 'H_ALPHA', 'Complete tie resolved by hotel ID ascending ASCII (H_ALPHA before H_ZETA)');
 
 // 5. Budget Equality & Shortfall
 console.log('\nTest Group 5: Budget Equality & Shortfall');
 const testHotels2 = [
-  { id: 'H_EXACT', name: 'Exact Hotel', stay_cost: 1000 },
-  { id: 'H_OTHER', name: 'Other Hotel', stay_cost: 1500 }
+  { id: 'H_EXACT', name: 'Exact Hotel', stay_cost: 10000 },
+  { id: 'H_OTHER', name: 'Other Hotel', stay_cost: 15000 }
 ];
 const testMatrix2 = {
   H_EXACT: { P01: 10, P02: 10, P03: 10 },
@@ -159,7 +160,7 @@ const resEqual = evaluateAndRankComparator(
   miniPlaces3,
   { P01: 3, P02: 3, P03: 3 },
   testMatrix2,
-  1000 // exact budget for H_EXACT
+  10000 // exact budget for H_EXACT (₹10,000)
 );
 assert(resEqual.isValid, '2-hotel scenario passes validation');
 assert(resEqual.affordableHotels.length === 1 && resEqual.affordableHotels[0].id === 'H_EXACT' && resEqual.affordableHotels[0].rank === 1, 'Hotel exactly on budget (stay_cost == budget) is affordable with rank 1');
@@ -169,7 +170,7 @@ const resOverOne = evaluateAndRankComparator(
   miniPlaces3,
   { P01: 3, P02: 3, P03: 3 },
   testMatrix2,
-  999 // 1 currency unit lower than H_EXACT (stay_cost 1000)
+  9999 // 1 currency unit lower than H_EXACT (stay_cost 10000)
 );
 assert(resOverOne.isValid, '1-unit over scenario is structurally valid');
 assert(resOverOne.affordableHotels.length === 0, 'Hotel 1 currency unit over budget is NOT affordable');
@@ -177,14 +178,14 @@ const hExactOver = resOverOne.evaluatedHotels.find((h) => h.id === 'H_EXACT');
 assert(hExactOver && hExactOver.rank === null, 'Over-budget hotel has no numerical rank');
 assert(hExactOver && hExactOver.shortfall === 1, 'Shortfall correctly calculated as 1 for 1-unit over budget');
 
-// 6. Main Scenario Story Conditions Verification
-console.log('\nTest Group 6: Main Scenario Story Conditions (Budget = 1200)');
+// 6. Main Scenario Story Conditions Verification in INR (Budget = ₹12,000)
+console.log('\nTest Group 6: Main Scenario Story Conditions in INR (Budget = ₹12,000)');
 const mainBaseline = evaluateAndRankComparator(
   MOCK_HOTELS,
   MOCK_DESTINATIONS,
   defaultImpMap,
   MOCK_TRAVEL_MATRIX,
-  1200
+  12000
 );
 
 assert(mainBaseline.isValid, 'Main scenario is valid');
@@ -203,7 +204,7 @@ assert(
 );
 assert(
   !absoluteWinner.is_affordable,
-  `Story Condition 2b: H01_PALACE is over budget at 1200 (stay_cost: ${absoluteWinner.stay_cost}, over by ${absoluteWinner.shortfall})`
+  `Story Condition 2b: H01_PALACE is over budget at ₹12,000 (stay_cost: ₹${absoluteWinner.stay_cost}, over by ₹${absoluteWinner.shortfall})`
 );
 
 const recommendedAffordable = mainBaseline.recommendedHotel;
@@ -214,7 +215,7 @@ assert(
 );
 assert(
   cheapestAffordable.id === 'H05_NOMAD',
-  `Story Condition 3b: Cheapest affordable hotel is H05_NOMAD (cost: ${cheapestAffordable.stay_cost})`
+  `Story Condition 3b: Cheapest affordable hotel is H05_NOMAD (cost: ₹${cheapestAffordable.stay_cost})`
 );
 assert(
   recommendedAffordable.id !== cheapestAffordable.id,
@@ -232,17 +233,17 @@ assert(
   `Story Condition 4b: H05_NOMAD has at least one round trip > 90 min (max: ${h05.max_round_trip_minutes} min to P07)`
 );
 
-// Story Condition 5: Raising budget to stay cost of most accessible hotel (1450)
-const budget1450 = evaluateAndRankComparator(
+// Story Condition 5: Raising budget to stay cost of most accessible hotel (₹14,500)
+const budget14500 = evaluateAndRankComparator(
   MOCK_HOTELS,
   MOCK_DESTINATIONS,
   defaultImpMap,
   MOCK_TRAVEL_MATRIX,
-  1450
+  14500
 );
 assert(
-  budget1450.recommendedHotel.id === 'H01_PALACE',
-  `Story Condition 5: Raising budget to 1450 unlocks H01_PALACE as Rank 1 Recommendation`
+  budget14500.recommendedHotel.id === 'H01_PALACE',
+  `Story Condition 5: Raising budget to ₹14,500 unlocks H01_PALACE as Rank 1 Recommendation`
 );
 
 // Story Condition 6: What-If changing P09_NIGHT_MKT importance within 1-5 flips recommendation
@@ -252,7 +253,7 @@ const whatIfScenario = evaluateAndRankComparator(
   MOCK_DESTINATIONS,
   modifiedImpMap,
   MOCK_TRAVEL_MATRIX,
-  1200
+  12000
 );
 assert(
   whatIfScenario.recommendedHotel.id === 'H03_CANAL',
@@ -266,7 +267,7 @@ const noAffordable = evaluateAndRankComparator(
   MOCK_DESTINATIONS,
   defaultImpMap,
   MOCK_TRAVEL_MATRIX,
-  500 // Below lowest hotel cost 820
+  5000 // Below lowest hotel cost ₹8,200
 );
 assert(noAffordable.status === 'NO_AFFORDABLE_HOTEL', 'Status returns NO_AFFORDABLE_HOTEL when budget is too low');
 assert(noAffordable.recommendedHotel === null, 'No recommendation provided');
@@ -279,13 +280,13 @@ console.log('\nTest Group 8: Validation & Rejection of Malformed Scenarios');
 // Duplicate ID
 const duplicateHotels = [
   ...MOCK_HOTELS.slice(0, 9),
-  { id: 'H01_PALACE', name: 'Duplicate Palace', stay_cost: 900 }
+  { id: 'H01_PALACE', name: 'Duplicate Palace', stay_cost: 9000 }
 ];
 const vDup = validateScenario({
   hotels: duplicateHotels,
   places: MOCK_DESTINATIONS,
   travelMatrix: MOCK_TRAVEL_MATRIX,
-  budget: 1200,
+  budget: 12000,
   importanceMap: defaultImpMap
 });
 assert(!vDup.isValid, 'Rejects duplicate hotel ID');
@@ -293,13 +294,13 @@ assert(!vDup.isValid, 'Rejects duplicate hotel ID');
 // Malformed ID (lowercase or invalid characters)
 const malformedHotels = [
   ...MOCK_HOTELS.slice(0, 9),
-  { id: 'hotel_bad_id', name: 'Bad ID Hotel', stay_cost: 900 }
+  { id: 'hotel_bad_id', name: 'Bad ID Hotel', stay_cost: 9000 }
 ];
 const vBadId = validateScenario({
   hotels: malformedHotels,
   places: MOCK_DESTINATIONS,
   travelMatrix: MOCK_TRAVEL_MATRIX,
-  budget: 1200,
+  budget: 12000,
   importanceMap: defaultImpMap
 });
 assert(!vBadId.isValid, 'Rejects malformed ID not matching [A-Z][A-Z0-9_-]{0,15}');
@@ -311,7 +312,7 @@ const vIncomplete = validateScenario({
   hotels: MOCK_HOTELS,
   places: MOCK_DESTINATIONS,
   travelMatrix: incompleteMatrix,
-  budget: 1200,
+  budget: 12000,
   importanceMap: defaultImpMap
 });
 assert(!vIncomplete.isValid, 'Rejects incomplete travel matrix mapping (missing place key)');
@@ -323,7 +324,7 @@ const vExtra = validateScenario({
   hotels: MOCK_HOTELS,
   places: MOCK_DESTINATIONS,
   travelMatrix: extraKeyMatrix,
-  budget: 1200,
+  budget: 12000,
   importanceMap: defaultImpMap
 });
 assert(!vExtra.isValid, 'Rejects unknown place key in travel matrix');
@@ -352,7 +353,7 @@ const vBadImp = validateScenario({
   hotels: MOCK_HOTELS,
   places: MOCK_DESTINATIONS,
   travelMatrix: MOCK_TRAVEL_MATRIX,
-  budget: 1200,
+  budget: 12000,
   importanceMap: { ...defaultImpMap, P01_CITADEL: 6 }
 });
 assert(!vBadImp.isValid, 'Rejects place importance > 5');
@@ -363,7 +364,7 @@ const evalInvalid = evaluateAndRankComparator(
   MOCK_DESTINATIONS,
   defaultImpMap,
   MOCK_TRAVEL_MATRIX,
-  1200
+  12000
 );
 assert(evalInvalid.status === 'INVALID_SCENARIO', 'Invalid scenario yields INVALID_SCENARIO status');
 assert(evalInvalid.evaluatedHotels.length === 0, 'Invalid state clears all evaluated hotels');
@@ -374,7 +375,7 @@ assert(evalInvalid.errors.length > 0, 'Invalid state exposes actionable error me
 console.log('\nTest Group 9: Budget Timeline Segments');
 const timeline = calculateBudgetTimeline(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImpMap, MOCK_TRAVEL_MATRIX);
 assert(timeline.length >= 2, `Budget timeline generated ${timeline.length} recommendation segments`);
-console.log('  Timeline segments:', timeline.map((s) => `$${s.startBudget}-${s.endBudget ?? '∞'}: ${s.recommendedHotelId}`).join(' | '));
+console.log('  Timeline segments:', timeline.map((s) => `₹${s.startBudget}-${s.endBudget ?? '∞'}: ${s.recommendedHotelId}`).join(' | '));
 
 console.log('\n=====================================================');
 console.log(`TEST SUMMARY: ${passedTests} / ${totalTests} TESTS PASSED`);

@@ -99,17 +99,17 @@ export function HotelRankingCards({
                 {/* Pricing & Affordability status */}
                 <div className="text-right shrink-0">
                   <div className="font-display text-base font-extrabold text-white num">
-                    ${hotel.stay_cost}
+                    ₹{hotel.stay_cost.toLocaleString('en-IN')}
                     <span className="text-[10px] font-normal text-ink-400 ml-0.5">total</span>
                   </div>
 
                   {isAffordable ? (
                     <span className="chip mt-1 border-emerald-400/25 bg-emerald-400/10 text-emerald-300 !text-[10px] num">
-                      <CheckCircle className="w-2.5 h-2.5" /> ${hotel.remaining_budget} under
+                      <CheckCircle className="w-2.5 h-2.5" /> ₹{hotel.remaining_budget.toLocaleString('en-IN')} under
                     </span>
                   ) : (
                     <span className="chip mt-1 border-rose-400/30 bg-rose-400/15 text-rose-300 !text-[10px] font-medium num">
-                      <XCircle className="w-2.5 h-2.5" /> Over budget by ${hotel.shortfall}
+                      <XCircle className="w-2.5 h-2.5" /> Over budget by ₹{hotel.shortfall.toLocaleString('en-IN')}
                     </span>
                   )}
                 </div>

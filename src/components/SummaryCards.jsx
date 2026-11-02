@@ -60,7 +60,7 @@ export function SummaryCards({
       {stat(
         'Affordable Base-Camps',
         affordableHotels.length,
-        `of ${hotels.length} · $${minCost}–$${maxCost} total`,
+        `of ${hotels.length} · ₹${minCost.toLocaleString('en-IN')}–₹${maxCost.toLocaleString('en-IN')} total`,
         Building,
         affordableHotels.length === 0 ? { ...tones.brand, bar: 'bg-rose-500' } : tones.brand,
         (affordableHotels.length / hotels.length) * 100
@@ -77,11 +77,11 @@ export function SummaryCards({
 
       {stat(
         'Main Budget Ceiling',
-        `$${budget.toLocaleString()}`,
+        `₹${budget.toLocaleString('en-IN')}`,
         `inspected: ${inspectedHotel ? inspectedHotel.id : 'None'}`,
         Network,
         tones.gold,
-        Math.min(100, (budget / 2500) * 100)
+        Math.min(100, (budget / 25000) * 100)
       )}
 
       {/* Recommended Base-Camp Card */}
@@ -110,7 +110,7 @@ export function SummaryCards({
             <div className="text-xs text-ink-300 mt-1 flex items-center gap-2">
               <span className="font-mono text-ink-400">{recommendedHotel.id}</span>
               <span>·</span>
-              <span className="text-emerald-300 font-semibold num">${recommendedHotel.stay_cost} stay</span>
+              <span className="text-emerald-300 font-semibold num">₹{recommendedHotel.stay_cost.toLocaleString('en-IN')} stay</span>
               <span>·</span>
               <span className="text-sky-300 font-semibold num">{recommendedHotel.display_average}m avg</span>
             </div>
@@ -122,7 +122,7 @@ export function SummaryCards({
           <div className="mt-3">
             <div className="text-sm font-bold text-rose-300">NO_AFFORDABLE_HOTEL</div>
             <p className="text-xs text-ink-400 mt-1">
-              Current budget is below the minimum hotel stay cost in Aethelgard Bay ($820).
+              Current budget is below the minimum hotel stay cost in Aethelgard Bay (₹8,200).
             </p>
           </div>
         )}

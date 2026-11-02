@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Compass, RotateCcw, Info, Building2, MapPin, DollarSign, ShieldCheck, Sparkles } from 'lucide-react';
+import { Compass, RotateCcw, Info, Building2, MapPin, IndianRupee, ShieldCheck, Sparkles } from 'lucide-react';
 import { AcceptanceTestModal } from './AcceptanceTestModal.jsx';
 
 /**
@@ -58,9 +58,9 @@ export function Header({
 
             {/* Complete Stay Budget Badge */}
             <div className="hidden sm:flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-ink-200 num">
-              <DollarSign className="w-3.5 h-3.5 text-gold-400" />
+              <IndianRupee className="w-3.5 h-3.5 text-gold-400" />
               <span>
-                Stay Budget: <strong className="text-white font-semibold">${budget.toLocaleString()}</strong>
+                Stay Budget: <strong className="text-white font-semibold">₹{budget.toLocaleString('en-IN')}</strong>
               </span>
               <span className="w-px h-3.5 bg-white/10" />
               <span
@@ -88,7 +88,7 @@ export function Header({
             <button
               onClick={onResetAll}
               className="btn !border-rose-400/25 !bg-rose-400/[0.07] !text-rose-300 hover:!bg-rose-400/15 text-xs"
-              title="Reset trip to initial $1,200 budget and default place importances"
+              title="Reset trip to initial ₹12,000 budget and default place importances"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Reset Trip</span>
@@ -139,7 +139,7 @@ export function Header({
               </div>
               <div className="p-2.5 rounded-lg border border-white/10 bg-white/5">
                 <span className="text-ink-400 block text-[10px] uppercase font-mono">Initial Budget</span>
-                <span className="text-white font-bold text-sm">$1,200 Complete Stay</span>
+                <span className="text-white font-bold text-sm">₹12,000 Complete Stay</span>
               </div>
               <div className="p-2.5 rounded-lg border border-white/10 bg-white/5">
                 <span className="text-ink-400 block text-[10px] uppercase font-mono">Corridors</span>

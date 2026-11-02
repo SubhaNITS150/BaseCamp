@@ -94,57 +94,57 @@ export function AcceptanceTestModal({ isOpen, onClose }) {
 
       // 5. Budget Equality & Shortfall
       const testH2 = [
-        { id: 'H_EXACT', name: 'Exact', stay_cost: 1000 },
-        { id: 'H_OTHER', name: 'Other', stay_cost: 1500 }
+        { id: 'H_EXACT', name: 'Exact', stay_cost: 10000 },
+        { id: 'H_OTHER', name: 'Other', stay_cost: 15000 }
       ];
       const testM2 = {
         H_EXACT: { P01: 10, P02: 10, P03: 10 },
         H_OTHER: { P01: 20, P02: 20, P03: 20 }
       };
-      const resEq = evaluateAndRankComparator(testH2, miniP3, { P01: 3, P02: 3, P03: 3 }, testM2, 1000);
+      const resEq = evaluateAndRankComparator(testH2, miniP3, { P01: 3, P02: 3, P03: 3 }, testM2, 10000);
       addTest('Budget Equality', 'Hotel exactly on budget (stay_cost == budget) is affordable', resEq.affordableHotels[0]?.id === 'H_EXACT');
 
-      const resOver1 = evaluateAndRankComparator(testH2, miniP3, { P01: 3, P02: 3, P03: 3 }, testM2, 999);
+      const resOver1 = evaluateAndRankComparator(testH2, miniP3, { P01: 3, P02: 3, P03: 3 }, testM2, 9999);
       const hExOver = resOver1.evaluatedHotels.find((h) => h.id === 'H_EXACT');
       addTest('Budget Equality', 'Hotel 1 currency unit over budget is unranked with shortfall 1', resOver1.affordableHotels.length === 0 && hExOver?.shortfall === 1);
 
-      // 6. Story Conditions at Initial Budget 1200
+      // 6. Story Conditions at Initial Budget ₹12,000
       const defaultImp = {};
       MOCK_DESTINATIONS.forEach((d) => (defaultImp[d.id] = d.defaultImportance));
-      const base1200 = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 1200);
+      const base12000 = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 12000);
 
-      addTest('Story Conditions', 'Condition 1: Exactly 4 through 7 hotels affordable (actual: 5)', base1200.affordableHotels.length >= 4 && base1200.affordableHotels.length <= 7);
-      const absWinner = [...base1200.evaluatedHotels].sort((a, b) => a.weighted_travel_total - b.weighted_travel_total)[0];
+      addTest('Story Conditions', 'Condition 1: Exactly 4 through 7 hotels affordable (actual: 5)', base12000.affordableHotels.length >= 4 && base12000.affordableHotels.length <= 7);
+      const absWinner = [...base12000.evaluatedHotels].sort((a, b) => a.weighted_travel_total - b.weighted_travel_total)[0];
       addTest('Story Conditions', 'Condition 2: Unique lowest travel total is over budget (H01_PALACE)', absWinner.id === 'H01_PALACE' && !absWinner.is_affordable);
-      const rec = base1200.recommendedHotel;
-      const cheapest = [...base1200.affordableHotels].sort((a, b) => a.stay_cost - b.stay_cost)[0];
+      const rec = base12000.recommendedHotel;
+      const cheapest = [...base12000.affordableHotels].sort((a, b) => a.stay_cost - b.stay_cost)[0];
       addTest('Story Conditions', 'Condition 3: Recommended hotel != cheapest affordable hotel', rec.id === 'H02_METRO' && cheapest.id === 'H05_NOMAD');
-      const h02 = base1200.affordableHotels.find((h) => h.id === 'H02_METRO');
-      const h05 = base1200.affordableHotels.find((h) => h.id === 'H05_NOMAD');
+      const h02 = base12000.affordableHotels.find((h) => h.id === 'H02_METRO');
+      const h05 = base12000.affordableHotels.find((h) => h.id === 'H05_NOMAD');
       addTest('Story Conditions', 'Condition 4a: Affordable hotel with all trips <= 90 min (H02_METRO)', h02.all_trips_le_90);
       addTest('Story Conditions', 'Condition 4b: Affordable hotel with round trip > 90 min (H05_NOMAD)', !h05.all_trips_le_90);
 
-      const b1450 = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 1450);
-      addTest('Story Conditions', 'Condition 5: Raising budget to $1450 makes H01_PALACE the recommendation', b1450.recommendedHotel?.id === 'H01_PALACE');
+      const b14500 = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 14500);
+      addTest('Story Conditions', 'Condition 5: Raising budget to ₹14,500 makes H01_PALACE the recommendation', b14500.recommendedHotel?.id === 'H01_PALACE');
 
-      const whatIf = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, { ...defaultImp, P09_NIGHT_MKT: 5 }, MOCK_TRAVEL_MATRIX, 1200);
+      const whatIf = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, { ...defaultImp, P09_NIGHT_MKT: 5 }, MOCK_TRAVEL_MATRIX, 12000);
       addTest('Story Conditions', 'Condition 6: Changing P09 importance to 5 flips recommendation to H03_CANAL', whatIf.recommendedHotel?.id === 'H03_CANAL');
 
       // 7. NO_AFFORDABLE_HOTEL
-      const noAff = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 500);
+      const noAff = evaluateAndRankComparator(MOCK_HOTELS, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 5000);
       addTest('No Affordable Hotel', 'Budget below lowest stay cost produces NO_AFFORDABLE_HOTEL with no stale winner', noAff.status === 'NO_AFFORDABLE_HOTEL' && noAff.recommendedHotel === null);
 
       // 8. Scenario Validation
-      const dupHotels = [...MOCK_HOTELS.slice(0, 9), { id: 'H01_PALACE', name: 'Dup', stay_cost: 900 }];
-      const vDup = validateScenario({ hotels: dupHotels, places: MOCK_DESTINATIONS, travelMatrix: MOCK_TRAVEL_MATRIX, budget: 1200, importanceMap: defaultImp });
+      const dupHotels = [...MOCK_HOTELS.slice(0, 9), { id: 'H01_PALACE', name: 'Dup', stay_cost: 9000 }];
+      const vDup = validateScenario({ hotels: dupHotels, places: MOCK_DESTINATIONS, travelMatrix: MOCK_TRAVEL_MATRIX, budget: 12000, importanceMap: defaultImp });
       addTest('Scenario Validation', 'Rejects duplicate ID across scenario', !vDup.isValid);
 
       const badMat = JSON.parse(JSON.stringify(MOCK_TRAVEL_MATRIX));
       delete badMat.H01_PALACE.P01_CITADEL;
-      const vMissing = validateScenario({ hotels: MOCK_HOTELS, places: MOCK_DESTINATIONS, travelMatrix: badMat, budget: 1200, importanceMap: defaultImp });
+      const vMissing = validateScenario({ hotels: MOCK_HOTELS, places: MOCK_DESTINATIONS, travelMatrix: badMat, budget: 12000, importanceMap: defaultImp });
       addTest('Scenario Validation', 'Rejects incomplete travel matrix mapping', !vMissing.isValid);
 
-      const invalidEval = evaluateAndRankComparator(dupHotels, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 1200);
+      const invalidEval = evaluateAndRankComparator(dupHotels, MOCK_DESTINATIONS, defaultImp, MOCK_TRAVEL_MATRIX, 12000);
       addTest('Invalid State Clearing', 'Invalid scenario clears stale ranks, recommendation and evaluated hotels', invalidEval.status === 'INVALID_SCENARIO' && invalidEval.evaluatedHotels.length === 0 && invalidEval.recommendedHotel === null);
 
     } catch (e) {

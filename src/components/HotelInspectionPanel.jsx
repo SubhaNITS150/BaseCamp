@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, MapPin, DollarSign, Clock, Zap, AlertTriangle, Check, X, Sparkles, Navigation, ArrowDown } from 'lucide-react';
+import { Eye, MapPin, IndianRupee, Clock, Zap, AlertTriangle, Check, X, Sparkles, Navigation, ArrowDown } from 'lucide-react';
 
 /**
  * HotelInspectionPanel Component:
@@ -29,12 +29,12 @@ export function HotelInspectionPanel({
 
   const getDecisionExplanation = () => {
     if (!isAffordable) {
-      return `This hotel is excluded from ranking because its complete-stay cost ($${hotel.stay_cost}) exceeds your $${budget} budget by $${hotel.shortfall}. It has an accessibility total of ${hotel.weighted_travel_total} imp-min.`;
+      return `This hotel is excluded from ranking because its complete-stay cost (₹${hotel.stay_cost.toLocaleString('en-IN')}) exceeds your ₹${budget.toLocaleString('en-IN')} budget by ₹${hotel.shortfall.toLocaleString('en-IN')}. It has an accessibility total of ${hotel.weighted_travel_total} imp-min.`;
     }
     if (isRecommended) {
-      return `Rank #1 Recommended: This hotel offers the lowest weighted travel total (${hotel.weighted_travel_total} importance-minutes) among all affordable stays within your $${budget} budget, averaging ${hotel.display_average} min per stop.`;
+      return `Rank #1 Recommended: This hotel offers the lowest weighted travel total (${hotel.weighted_travel_total} importance-minutes) among all affordable stays within your ₹${budget.toLocaleString('en-IN')} budget, averaging ${hotel.display_average} min per stop.`;
     }
-    return `Rank #${hotel.rank}: This hotel is affordable ($${hotel.remaining_budget} under budget) with a weighted total of ${hotel.weighted_travel_total} imp-min (${hotel.display_average} min avg). It has higher total transit time than higher-ranked options.`;
+    return `Rank #${hotel.rank}: This hotel is affordable (₹${hotel.remaining_budget.toLocaleString('en-IN')} under budget) with a weighted total of ${hotel.weighted_travel_total} imp-min (${hotel.display_average} min avg). It has higher total transit time than higher-ranked options.`;
   };
 
   const metrics = [
@@ -62,11 +62,11 @@ export function HotelInspectionPanel({
       sub: `Max trip: ${hotel.max_round_trip_minutes} min`
     },
     {
-      icon: DollarSign,
+      icon: IndianRupee,
       tone: isAffordable ? 'text-emerald-300' : 'text-rose-300',
       label: 'Stay Cost',
-      value: `$${hotel.stay_cost}`,
-      sub: isAffordable ? `$${hotel.remaining_budget} remaining` : `Over by $${hotel.shortfall}`
+      value: `₹${hotel.stay_cost.toLocaleString('en-IN')}`,
+      sub: isAffordable ? `₹${hotel.remaining_budget.toLocaleString('en-IN')} remaining` : `Over by ₹${hotel.shortfall.toLocaleString('en-IN')}`
     }
   ];
 
@@ -105,7 +105,7 @@ export function HotelInspectionPanel({
 
           <div className="text-right shrink-0">
             <div className="font-display text-2xl font-extrabold text-white num leading-none">
-              ${hotel.stay_cost}
+              ₹{hotel.stay_cost.toLocaleString('en-IN')}
             </div>
             <div className="text-[11px] text-ink-400 mt-1">complete stay</div>
           </div>
@@ -120,11 +120,11 @@ export function HotelInspectionPanel({
           <span className="text-brand-400 font-medium">{hotel.style}</span>
           {isAffordable ? (
             <span className="chip border-emerald-400/25 bg-emerald-400/10 text-emerald-300 num">
-              <Check className="w-3 h-3" /> ${hotel.remaining_budget} under budget
+              <Check className="w-3 h-3" /> ₹{hotel.remaining_budget.toLocaleString('en-IN')} under budget
             </span>
           ) : (
             <span className="chip border-rose-400/30 bg-rose-400/15 text-rose-300 num font-medium">
-              <X className="w-3 h-3" /> Over budget by ${hotel.shortfall}
+              <X className="w-3 h-3" /> Over budget by ₹{hotel.shortfall.toLocaleString('en-IN')}
             </span>
           )}
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertOctagon, ArrowUpRight, DollarSign, RotateCcw, Building } from 'lucide-react';
+import { AlertOctagon, ArrowUpRight, IndianRupee, RotateCcw, Building } from 'lucide-react';
 
 /**
  * NoAffordableDisplay Component:
@@ -16,7 +16,7 @@ export function NoAffordableDisplay({
   onSetBudget,
   onResetBudget
 }) {
-  const minRequired = lowestPriceHotel ? lowestPriceHotel.stay_cost : 820;
+  const minRequired = lowestPriceHotel ? lowestPriceHotel.stay_cost : 8200;
   const shortfall = Math.max(0, minRequired - budget);
 
   return (
@@ -36,7 +36,7 @@ export function NoAffordableDisplay({
           No Hotel Base-Camps Fit Within Current Budget
         </h3>
         <p className="mt-2 text-sm text-ink-200 max-w-lg mx-auto leading-relaxed">
-          Your complete-stay budget of <strong className="text-rose-300 num">${budget.toLocaleString()}</strong> is below the minimum lodging price in Aethelgard Bay.
+          Your complete-stay budget of <strong className="text-rose-300 num">₹{budget.toLocaleString('en-IN')}</strong> is below the minimum lodging price in Aethelgard Bay.
           All hotels remain visible in the rankings below with their specific shortfalls retained.
         </p>
 
@@ -52,10 +52,10 @@ export function NoAffordableDisplay({
               </div>
               <div className="text-right shrink-0">
                 <div className="font-display text-lg font-extrabold text-emerald-300 num">
-                  ${lowestPriceHotel.stay_cost}
+                  ₹{lowestPriceHotel.stay_cost.toLocaleString('en-IN')}
                 </div>
                 <div className="text-[11px] text-rose-300 font-medium num">
-                  +${shortfall} shortfall
+                  +₹{shortfall.toLocaleString('en-IN')} shortfall
                 </div>
               </div>
             </div>
@@ -64,12 +64,12 @@ export function NoAffordableDisplay({
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <button onClick={() => onSetBudget(minRequired)} className="btn-primary text-xs">
-            <DollarSign className="w-4 h-4" />
-            Unlock Minimum Stay (${minRequired})
+            <IndianRupee className="w-4 h-4" />
+            Unlock Minimum Stay (₹{minRequired.toLocaleString('en-IN')})
             <ArrowUpRight className="w-4 h-4" />
           </button>
           <button onClick={onResetBudget} className="btn !py-2 text-xs">
-            <RotateCcw className="w-3.5 h-3.5" /> Reset to Baseline ($1,200)
+            <RotateCcw className="w-3.5 h-3.5" /> Reset to Baseline (₹12,000)
           </button>
         </div>
       </div>

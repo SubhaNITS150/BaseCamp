@@ -24,7 +24,7 @@ import { BudgetTimeline } from './components/BudgetTimeline.jsx';
 
 export default function App() {
   // Documented main scenario initial values
-  const DEFAULT_BUDGET = 1200;
+  const DEFAULT_BUDGET = 12000;
 
   const defaultWeightsMap = useMemo(() => {
     const map = {};
@@ -189,7 +189,7 @@ export default function App() {
             <BudgetController
               budget={budget}
               minBudget={0}
-              maxBudget={2500}
+              maxBudget={30000}
               affordableCount={affordableHotels.length}
               totalHotelsCount={MOCK_HOTELS.length}
               hotels={MOCK_HOTELS}

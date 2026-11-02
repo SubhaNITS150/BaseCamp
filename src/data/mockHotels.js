@@ -1,25 +1,25 @@
 /**
  * Fictional City Hotel Base-Camps (Aethelgard Bay)
- * Exactly 10 hotels with whole-number complete stay costs (1 to 1,000,000).
+ * Exactly 10 hotels with whole-number complete stay costs in INR (₹) (1 to 1,000,000).
  * IDs conform to ^[A-Z][A-Z0-9_-]{0,15}$
  */
 export const MOCK_HOTELS = [
   {
     id: 'H01_PALACE',
     name: 'Grand Palace Imperial',
-    stay_cost: 1450,
+    stay_cost: 14500,
     district: 'Royal Citadel Bastion',
     style: 'Heritage Luxury',
     rating: 4.9,
     reviewsCount: 2420,
     coordinates: { x: 490, y: 150 },
-    description: 'Opulent 19th-century royal lodging adjacent to the Citadel; premier access but exceeds initial budget.',
+    description: 'Opulent royal lodging adjacent to the Citadel; premier access but exceeds initial budget of ₹12,000.',
     amenities: ['Imperial Concierge', 'Valet Transit', 'Rooftop Lounge', 'Fine Dining']
   },
   {
     id: 'H02_METRO',
     name: 'Central Metro Base-Camp',
-    stay_cost: 1050,
+    stay_cost: 10500,
     district: 'Central Interchange',
     style: 'Transit Hub Hotel',
     rating: 4.6,
@@ -31,7 +31,7 @@ export const MOCK_HOTELS = [
   {
     id: 'H03_CANAL',
     name: 'Verdant Canal Boutique',
-    stay_cost: 980,
+    stay_cost: 9800,
     district: 'Midtown River Canal',
     style: 'Boutique Riverside',
     rating: 4.7,
@@ -43,7 +43,7 @@ export const MOCK_HOTELS = [
   {
     id: 'H04_OLDTOWN',
     name: 'Old Citadel Heritage Inn',
-    stay_cost: 1150,
+    stay_cost: 11500,
     district: 'Historic Artisan Quarter',
     style: 'Cozy Historic',
     rating: 4.5,
@@ -55,7 +55,7 @@ export const MOCK_HOTELS = [
   {
     id: 'H05_NOMAD',
     name: 'Portside Nomad Hostel',
-    stay_cost: 820,
+    stay_cost: 8200,
     district: 'South Industrial Basin',
     style: 'Social Budget',
     rating: 4.2,
@@ -67,31 +67,31 @@ export const MOCK_HOTELS = [
   {
     id: 'H06_RIVER',
     name: 'Meridian Riverside Lodge',
-    stay_cost: 1200,
+    stay_cost: 12000,
     district: 'River Promenade East',
     style: 'Modern Scenic',
     rating: 4.6,
     reviewsCount: 880,
     coordinates: { x: 570, y: 390 },
-    description: 'Waterside lodge directly on the eastern boardwalk; stay cost exactly equals initial lodging budget.',
+    description: 'Waterside lodge directly on the eastern boardwalk; stay cost exactly equals initial lodging budget of ₹12,000.',
     amenities: ['Riverfront Terrace', 'Ferry Berth', 'Fitness Room', 'Evening Jazz']
   },
   {
     id: 'H07_HARBOR',
     name: 'Harborview Point Suites',
-    stay_cost: 1350,
+    stay_cost: 13500,
     district: 'Marina Promenade',
     style: 'Coastal Maritime',
     rating: 4.8,
     reviewsCount: 1310,
     coordinates: { x: 190, y: 310 },
-    description: 'Sweeping maritime views over the deep-water harbor and seafood wharfs; over initial budget by $150.',
+    description: 'Sweeping maritime views over the deep-water harbor and seafood wharfs; over initial budget by ₹1,500.',
     amenities: ['Harbor Shuttle', 'Spa & Wellness', 'Seafood Terrace', 'Sailing Dock']
   },
   {
     id: 'H08_GARDEN',
     name: 'Canopy Botanical Resort',
-    stay_cost: 1600,
+    stay_cost: 16000,
     district: 'Eastern Foothills',
     style: 'Eco Serenity',
     rating: 4.7,
@@ -103,7 +103,7 @@ export const MOCK_HOTELS = [
   {
     id: 'H09_FINANCE',
     name: 'Pinnacle Financial Tower',
-    stay_cost: 1800,
+    stay_cost: 18000,
     district: 'Financial & FinTech Center',
     style: 'Modern Executive',
     rating: 4.7,
@@ -115,7 +115,7 @@ export const MOCK_HOTELS = [
   {
     id: 'H10_STRAND',
     name: 'Solaria Cove Coastal Retreat',
-    stay_cost: 2200,
+    stay_cost: 22000,
     district: 'Southern Beachfront',
     style: 'Luxury Coastal',
     rating: 4.9,
