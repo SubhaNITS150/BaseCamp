@@ -1,0 +1,189 @@
+/**
+ * Deterministic 10-by-15 Round-Trip Travel Time Matrix (in whole-number minutes, 1-600).
+ *
+ * Contract requirements:
+ * - Materialized as stable explicit constants; does not use map geometry or randomness.
+ * - Presentation coordinates are NEVER used for travel time or ranking.
+ * - Every hotel contains keys matching all 15 place IDs.
+ * - At least one affordable hotel has all round-trips <= 90 min (H02_METRO max = 52).
+ * - Another affordable hotel has at least one round-trip > 90 min (H05_NOMAD to P07 = 98).
+ */
+export const MOCK_TRAVEL_MATRIX = {
+  H01_PALACE: {
+    P01_CITADEL: 12,
+    P02_MUSEUM: 18,
+    P03_RIVERWALK: 20,
+    P04_OPERA: 10,
+    P05_CLOCK_TOWER: 15,
+    P06_BOTANIC: 32,
+    P07_OBSERVATORY: 45,
+    P08_CATHEDRAL: 16,
+    P09_NIGHT_MKT: 28,
+    P10_SEAFOOD_PIER: 22,
+    P11_BAKERY_SQ: 14,
+    P12_SPICE_ALLEY: 24,
+    P13_NOODLE_LANE: 20,
+    P14_ROAST_HOUSE: 26,
+    P15_TEA_PAVILION: 30
+  },
+  H02_METRO: {
+    P01_CITADEL: 25,
+    P02_MUSEUM: 20,
+    P03_RIVERWALK: 22,
+    P04_OPERA: 24,
+    P05_CLOCK_TOWER: 18,
+    P06_BOTANIC: 35,
+    P07_OBSERVATORY: 52,
+    P08_CATHEDRAL: 22,
+    P09_NIGHT_MKT: 42,
+    P10_SEAFOOD_PIER: 30,
+    P11_BAKERY_SQ: 28,
+    P12_SPICE_ALLEY: 25,
+    P13_NOODLE_LANE: 24,
+    P14_ROAST_HOUSE: 32,
+    P15_TEA_PAVILION: 36
+  },
+  H03_CANAL: {
+    P01_CITADEL: 34,
+    P02_MUSEUM: 26,
+    P03_RIVERWALK: 15,
+    P04_OPERA: 30,
+    P05_CLOCK_TOWER: 26,
+    P06_BOTANIC: 42,
+    P07_OBSERVATORY: 58,
+    P08_CATHEDRAL: 28,
+    P09_NIGHT_MKT: 16,
+    P10_SEAFOOD_PIER: 24,
+    P11_BAKERY_SQ: 32,
+    P12_SPICE_ALLEY: 22,
+    P13_NOODLE_LANE: 18,
+    P14_ROAST_HOUSE: 30,
+    P15_TEA_PAVILION: 38
+  },
+  H04_OLDTOWN: {
+    P01_CITADEL: 16,
+    P02_MUSEUM: 24,
+    P03_RIVERWALK: 30,
+    P04_OPERA: 20,
+    P05_CLOCK_TOWER: 18,
+    P06_BOTANIC: 48,
+    P07_OBSERVATORY: 62,
+    P08_CATHEDRAL: 15,
+    P09_NIGHT_MKT: 46,
+    P10_SEAFOOD_PIER: 38,
+    P11_BAKERY_SQ: 12,
+    P12_SPICE_ALLEY: 35,
+    P13_NOODLE_LANE: 34,
+    P14_ROAST_HOUSE: 28,
+    P15_TEA_PAVILION: 44
+  },
+  H05_NOMAD: {
+    P01_CITADEL: 55,
+    P02_MUSEUM: 44,
+    P03_RIVERWALK: 40,
+    P04_OPERA: 50,
+    P05_CLOCK_TOWER: 42,
+    P06_BOTANIC: 70,
+    P07_OBSERVATORY: 98, // Boundary case: > 90 minutes
+    P08_CATHEDRAL: 48,
+    P09_NIGHT_MKT: 36,
+    P10_SEAFOOD_PIER: 28,
+    P11_BAKERY_SQ: 52,
+    P12_SPICE_ALLEY: 40,
+    P13_NOODLE_LANE: 45,
+    P14_ROAST_HOUSE: 50,
+    P15_TEA_PAVILION: 65
+  },
+  H06_RIVER: {
+    P01_CITADEL: 38,
+    P02_MUSEUM: 32,
+    P03_RIVERWALK: 12,
+    P04_OPERA: 35,
+    P05_CLOCK_TOWER: 30,
+    P06_BOTANIC: 45,
+    P07_OBSERVATORY: 65,
+    P08_CATHEDRAL: 32,
+    P09_NIGHT_MKT: 30,
+    P10_SEAFOOD_PIER: 32,
+    P11_BAKERY_SQ: 36,
+    P12_SPICE_ALLEY: 30,
+    P13_NOODLE_LANE: 26,
+    P14_ROAST_HOUSE: 34,
+    P15_TEA_PAVILION: 40
+  },
+  H07_HARBOR: {
+    P01_CITADEL: 40,
+    P02_MUSEUM: 25,
+    P03_RIVERWALK: 35,
+    P04_OPERA: 36,
+    P05_CLOCK_TOWER: 32,
+    P06_BOTANIC: 55,
+    P07_OBSERVATORY: 75,
+    P08_CATHEDRAL: 36,
+    P09_NIGHT_MKT: 22,
+    P10_SEAFOOD_PIER: 12,
+    P11_BAKERY_SQ: 38,
+    P12_SPICE_ALLEY: 28,
+    P13_NOODLE_LANE: 30,
+    P14_ROAST_HOUSE: 36,
+    P15_TEA_PAVILION: 48
+  },
+  H08_GARDEN: {
+    P01_CITADEL: 50,
+    P02_MUSEUM: 45,
+    P03_RIVERWALK: 42,
+    P04_OPERA: 44,
+    P05_CLOCK_TOWER: 40,
+    P06_BOTANIC: 12,
+    P07_OBSERVATORY: 35,
+    P08_CATHEDRAL: 42,
+    P09_NIGHT_MKT: 60,
+    P10_SEAFOOD_PIER: 58,
+    P11_BAKERY_SQ: 46,
+    P12_SPICE_ALLEY: 48,
+    P13_NOODLE_LANE: 44,
+    P14_ROAST_HOUSE: 45,
+    P15_TEA_PAVILION: 22
+  },
+  H09_FINANCE: {
+    P01_CITADEL: 35,
+    P02_MUSEUM: 28,
+    P03_RIVERWALK: 32,
+    P04_OPERA: 25,
+    P05_CLOCK_TOWER: 22,
+    P06_BOTANIC: 38,
+    P07_OBSERVATORY: 55,
+    P08_CATHEDRAL: 26,
+    P09_NIGHT_MKT: 48,
+    P10_SEAFOOD_PIER: 40,
+    P11_BAKERY_SQ: 34,
+    P12_SPICE_ALLEY: 32,
+    P13_NOODLE_LANE: 30,
+    P14_ROAST_HOUSE: 38,
+    P15_TEA_PAVILION: 42
+  },
+  H10_STRAND: {
+    P01_CITADEL: 68,
+    P02_MUSEUM: 56,
+    P03_RIVERWALK: 54,
+    P04_OPERA: 62,
+    P05_CLOCK_TOWER: 58,
+    P06_BOTANIC: 50,
+    P07_OBSERVATORY: 42,
+    P08_CATHEDRAL: 58,
+    P09_NIGHT_MKT: 52,
+    P10_SEAFOOD_PIER: 46,
+    P11_BAKERY_SQ: 64,
+    P12_SPICE_ALLEY: 55,
+    P13_NOODLE_LANE: 50,
+    P14_ROAST_HOUSE: 56,
+    P15_TEA_PAVILION: 45
+  }
+};
+
+/**
+ * Returns a stable clone of the deterministic travel matrix.
+ */
+export function getStableTravelMatrix() {
+  return JSON.parse(JSON.stringify(MOCK_TRAVEL_MATRIX));
+}
