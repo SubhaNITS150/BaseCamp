@@ -401,29 +401,19 @@ flowchart TD
 
 ## Architecture Images
 
-Architecture images will be added to this section separately. Keep the image files in `docs/assets/` so that the README can reference them using repository-relative paths.
+## Architecture Images
 
-Suggested filenames:
+### 1. Application Architecture Overview
 
-```text
-docs/
-└── assets/
-    ├── architecture-overview.png
-    ├── application-flow.png
-    └── recommendation-engine-flow.png
-```
+![Application Architecture Overview](https://res.cloudinary.com/dludtk5vz/image/upload/v1793644399/Hotel_Recommendation_App_Architecture_a7aqqr.png)
 
-When you add the corresponding images, insert them using the matching Markdown references below. Remove any reference for an image you do not add.
+### 2. Application Flow
 
-```md
-![Application architecture overview](https://res.cloudinary.com/dludtk5vz/image/upload/v1793644399/Hotel_Recommendation_App_Architecture_a7aqqr.png)
+![Application Flow](docs/assets/application-flow.png)
 
-![Application flow](docs/assets/application-flow.png)
+### 3. Recommendation Engine Flow
 
-![Recommendation engine flow](docs/assets/recommendation-engine-flow.png)
-```
-
-The Mermaid diagram above is included as a text-renderable architecture view. The additional image slots are intended for your own architecture diagrams; no placeholder or generated diagram is presented as an actual project screenshot.
+![Recommendation Engine Flow](docs/assets/recommendation-engine-flow.png)
 
 ## Technology Stack
 
